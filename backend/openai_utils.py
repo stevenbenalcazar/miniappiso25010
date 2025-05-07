@@ -1,21 +1,19 @@
-import openai
 import os
+from openai import OpenAI
+from dotenv import load_dotenv
 
-# Cargar clave API desde el entorno
-openai.api_key = os.getenv("OPENAI_API_KEY")
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))  # Cliente nuevo
 
-def analyze_case_with_ai(case_text, iso_type):
+def analyze_case_with_ai(caso):
     try:
-        # Usamos la API correcta para chat completions con la nueva versión
-        response = openai.ChatCompletion.create(
-            model="gpt-4",  # o usa "gpt-3.5-turbo" si prefieres
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": f"Estás ayudando a analizar un caso de estudio según ISO {iso_type}."},
-                {"role": "user", "content": case_text}
-            ],
-            max_tokens=150,
-            temperature=0.7,
+                {"role": "system", "content": "Eres un experto en análisis de calidad de software."},
+                {"role": "user", "content": f"Analiza este caso de falla en un sistema: {caso}"}
+            ]
         )
-        return response['choices'][0]['message']['content'].strip()  # Obtener la respuesta correcta
+        return response.choices[0].message.content.strip()
     except Exception as e:
-        return f"Error al generar solución: {str(e)}"
+        return f"Error al generar solución: {e}"

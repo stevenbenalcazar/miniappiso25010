@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from openai_utils import analyze_case_with_ai  # Asegúrate de que esta es la función correcta
+from openai_utils import analyze_case_with_ai  # Asegúrate de que esta función esté bien definida
 from evaluation import evaluate_solutions
 import os
 
@@ -16,8 +16,8 @@ def analyze():
     if not caso or not solucion_usuario:
         return jsonify({"error": "Faltan datos"}), 400
 
-    # Obtener solución generada por IA (usamos la función correcta)
-    solucion_ia = analyze_case_with_ai(caso, "ISO_25010")  # Asume que el ISO es ISO_25010, puedes ajustarlo
+    # ✅ Corrección: llama a la IA correctamente
+    solucion_ia = analyze_case_with_ai(caso)
 
     # Evaluar comparativamente
     comparativa = evaluate_solutions(caso, solucion_ia, solucion_usuario)
