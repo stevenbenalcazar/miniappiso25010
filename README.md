@@ -47,22 +47,3 @@ Editar
 python backend/main.py
 Abre el archivo frontend/index.html en tu navegador.
 
-🧪 Estructura del proyecto
-bash
-Copiar
-Editar
-miniappiso25010/
-│
-├── backend/
-│   ├── main.py               # Servidor Flask
-│   ├── evaluation.py         # Comparación con ISO/IEC 25010
-│   ├── openai_utils.py       # Análisis con OpenAI
-│
-├── frontend/
-│   ├── index.html            # Interfaz web
-│   ├── script.js             # Lógica del frontend
-│   └── style.css             # Estilos
-│
-├── .env                      # API Key de OpenAI
-├── requirements.txt          # Dependencias
-└── README.md
