@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evaluador ISO/IEC 25010</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Analizador de Calidad - ISO/IEC 25010</h1>
+
+    <form id="analyzeForm">
+      <label for="caso">Caso de estudio (fallo en el proceso):</label>
+      <textarea id="caso" required></textarea>
+
+      <label for="solucion_usuario">Tu solución al problema:</label>
+      <textarea id="solucion_usuario" required></textarea>
+
+      <button type="submit">Analizar y comparar</button>
+    </form>
+
+    <div id="resultados" class="hidden">
+      <h2>Resultados</h2>
+      <p><strong>Solución IA:</strong></p>
+      <pre id="solucionIA"></pre>
+
+      <p><strong>Tu solución:</strong></p>
+      <pre id="solucionUsuario"></pre>
+
+      <p><strong>Evaluación comparativa:</strong></p>
+      <pre id="evaluacion"></pre>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
