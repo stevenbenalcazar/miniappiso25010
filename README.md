@@ -16,14 +16,15 @@ Este mini proyecto permite analizar fallos en procesos de software y compararlos
 
 ### 🧰 Instalación
 
-1. **Clona el repositorio**
+**Clona el repositorio**
 
 ```bash
-git clone https://github.com/tuusuario/miniappiso25010.git
-cd miniappiso25010
+- git clone https://github.com/tuusuario/miniappiso25010.git
+- cd miniappiso25010
 
+---
 
-(Opcional) Crea y activa un entorno virtual
+**(Opcional) Crea y activa un entorno virtual**
 
 bash
 Copiar
