@@ -24,3 +24,9 @@ document.getElementById("analyzeForm").addEventListener("submit", async (e) => {
     document.getElementById("resultados").classList.remove("hidden");
   });
   
+  const resultadoEvaluacion = document.getElementById("resultadoEvaluacion");
+
+  function mostrarEvaluacion(data) {
+    resultadoEvaluacion.innerText = data.evaluacion;
+    resultadoEvaluacion.style.display = "block";
+  }

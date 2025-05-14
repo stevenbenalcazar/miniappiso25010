@@ -2,37 +2,87 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Evaluador ISO/IEC 25010</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>ISO/IEC 25010 Evaluador</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+    }
+    h1 {
+      color: #1f3a60;
+      text-align: center;
+    }
+    textarea, input, button {
+      width: 100%;
+      margin: 0.75rem 0;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result, .evaluacion {
+      background: white;
+      padding: 1.25rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .label {
+      font-weight: bold;
+      margin-top: 1rem;
+      display: block;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Analizador de Calidad - ISO/IEC 25010</h1>
+  <h1>🔍 Analizador ISO/IEC 25010</h1>
 
-    <form id="analyzeForm">
-      <label for="caso">Caso de estudio (fallo en el proceso):</label>
-      <textarea id="caso" required></textarea>
+  <button onclick="generarCaso()">🎲 Generar nuevo caso de estudio</button>
+  <div class="result" id="caso-estudio">Aquí aparecerá el caso generado.</div>
 
-      <label for="solucion_usuario">Tu solución al problema:</label>
-      <textarea id="solucion_usuario" required></textarea>
+  <label class="label" for="solucionUsuario">✍️ Escribe tu solución:</label>
+  <textarea id="solucionUsuario" rows="5" placeholder="Describe tu solución aquí..."></textarea>
 
-      <button type="submit">Analizar y comparar</button>
-    </form>
+  <button onclick="analizar()">📊 Analizar y comparar soluciones</button>
 
-    <div id="resultados" class="hidden">
-      <h2>Resultados</h2>
-      <p><strong>Solución IA:</strong></p>
-      <pre id="solucionIA"></pre>
+  <div class="result" id="solucionIA"></div>
+  <div class="evaluacion" id="resultadoEvaluacion"></div>
 
-      <p><strong>Tu solución:</strong></p>
-      <pre id="solucionUsuario"></pre>
+  <script>
+    async function generarCaso() {
+      const res = await fetch("/api/generate_case");
+      const data = await res.json();
+      document.getElementById("caso-estudio").innerText = data.caso;
+    }
 
-      <p><strong>Evaluación comparativa:</strong></p>
-      <pre id="evaluacion"></pre>
-    </div>
-  </div>
+    async function analizar() {
+      const caso = document.getElementById("caso-estudio").innerText;
+      const solucion_usuario = document.getElementById("solucionUsuario").value;
 
-  <script src="script.js"></script>
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ caso, solucion_usuario })
+      });
+
+      const data = await res.json();
+      document.getElementById("solucionIA").innerHTML = `<strong>🤖 Solución generada por IA:</strong><br>${data.solucion_ia}`;
+      document.getElementById("resultadoEvaluacion").innerHTML = `<strong>📋 Evaluación comparativa:</strong><br>${data.evaluacion}`;
+    }
+  </script>
 </body>
 </html>

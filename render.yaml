@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: miniappiso25010
+    env: python
+    buildCommand: ""
+    startCommand: "python backend/main.py"
+    envVars:
+      - key: OPENAI_API_KEY
+        value: tu-api-key
