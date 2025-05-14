@@ -1,9 +1,11 @@
-import openai
 import os
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))  # Nuevo cliente
+
+# Cliente actualizado con la API Key
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def evaluate_solutions(caso, ia_solution, user_solution):
     prompt = f"""
@@ -27,14 +29,15 @@ Ejemplo de salida:
 - Solución Usuario: 6
 Justificación: [explicación aquí]
 """
-
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
             temperature=0.7,
             max_tokens=700
         )
-        return response.choices[0].message["content"].strip()
+        return response.choices[0].message.content.strip()
     except Exception as e:
         return f"Error al evaluar soluciones: {str(e)}"
